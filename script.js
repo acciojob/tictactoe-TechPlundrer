@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let player1 = "";
   let player2 = "";
   let currentPlayer = "";
-  let currentSymbol = "x";
+  let currentSymbol = "X";
   let gameOver = false;
 
   const winPatterns = [
@@ -21,27 +21,26 @@ document.addEventListener("DOMContentLoaded", function () {
     [3,5,7]
   ];
 
-  submitBtn.addEventListener("click", function () {
-    const p1 = document.getElementById("player1");
-    const p2 = document.getElementById("player2");
+  submitBtn.addEventListener("click", () => {
+    const p1Input = document.getElementById("player1");
+    const p2Input = document.getElementById("player2");
 
-    if (!p1 || !p2) return;
+    if (!p1Input || !p2Input) return;
 
-    player1 = p1.value.trim();
-    player2 = p2.value.trim();
+    player1 = p1Input.value.trim();
+    player2 = p2Input.value.trim();
 
     if (!player1 || !player2) return;
 
-    document.getElementById("player-form").style.display = "none";
-    document.getElementById("game").style.display = "block";
+    document.getElementById("player-form").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
 
     currentPlayer = player1;
-    currentSymbol = "X";
     messageDiv.textContent = `${currentPlayer}, you're up`;
   });
 
-  cells.forEach(function (cell) {
-    cell.addEventListener("click", function () {
+  cells.forEach(cell => {
+    cell.addEventListener("click", () => {
       if (cell.textContent !== "" || gameOver) return;
 
       cell.textContent = currentSymbol;
@@ -52,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      if (currentSymbol === "x") {
-        currentSymbol = "o";
+      if (currentSymbol === "X") {
+        currentSymbol = "O";
         currentPlayer = player2;
       } else {
-        currentSymbol = "x";
+        currentSymbol = "X";
         currentPlayer = player1;
       }
 
@@ -65,11 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function checkWin() {
-    return winPatterns.some(function (pattern) {
-      return pattern.every(function (id) {
-        return document.getElementById(id).textContent === currentSymbol;
-      });
-    });
+    return winPatterns.some(pattern =>
+      pattern.every(id =>
+        document.getElementById(id).textContent === currentSymbol
+      )
+    );
   }
 
 });
+
+}
