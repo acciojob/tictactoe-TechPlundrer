@@ -21,8 +21,8 @@ const winPatterns = [
 ];
 
 submitBtn.addEventListener("click", () => {
-  player1 = document.getElementById("#player1").value.trim();
-  player2 = document.getElementById("#player2").value.trim();
+  player1 = document.getElementById("#player1");
+  player2 = document.getElementById("#player2");
 
   if (!player1 || !player2) {
 	alert("Enter both player names");
