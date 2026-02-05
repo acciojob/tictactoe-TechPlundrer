@@ -9,15 +9,29 @@
 <body>
 	<div class="container">
 		<h1 >TIC TAC TOE</h1>
-		<div class="message">" , you're up"</div>
+		<div class="message">
+			<p id="msg"></p>
+		</div>
 			
 		<label class="player" >Player-1</label>
-		<input type="text" id="player-1">
+		<input type="text" id="player-1" placeholder="enter name">
 		<br>
 		<label class="player">Player-2</label>
-		<input type="text" id="player-2">
+		<input type="text" id="player-2" placeholder="enter name">
 		<br>
-		<button type="submit" id="submit">Submit</button>
+		<button type="submit" id="submit">Start Game</button>
+
+	 <div class="board">
+        <div class="box" id="1">0</div>
+        <div class="box" id="2">1</div>
+        <div class="box" id="3">2</div>
+        <div class="box" id="4">3</div>
+        <div class="box" id="5">4</div>
+        <div class="box" id="6">5</div>
+        <div class="box" id="7">6</div>
+        <div class="box" id="8">7</div>
+        <div class="box" id="9">8</div>
+      </div>
 	</div>
 	<!-- the entire body must be written by student -->
     <script type="text/javascript" src="./script.js">
