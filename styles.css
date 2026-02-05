@@ -1,1 +1,15 @@
 /*  your css code here. If applicable */
+.body {
+	height: 500vh;
+	width: 500vb;
+}
+.container {
+	margin-top: 30px;
+}
+h1 {
+	text-align: center;
+	font-style: fantasy;
+}
+.player {
+	text-align: center;
+}
