@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let player1 = "";
   let player2 = "";
   let currentPlayer = "";
-  let currentSymbol = "x";
+  let currentSymbol = "X";
   let gameOver = false;
 
   const winPatterns = [
