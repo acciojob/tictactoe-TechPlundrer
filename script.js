@@ -1,44 +1,70 @@
-//your JS code here. If required.
-let boxes = document.querySelectorAll(".box");
-let turnO = true;
+const submitBtn = document.getElementById("submit");
+const gameDiv = document.getElementById("game");
+const messageDiv = document.querySelector(".message");
+const cells = document.querySelectorAll(".cell");
+
+let player1 = "";
+let player2 = "";
+let currentPlayer = "";
+let currentSymbol = "X";
+let gameOver = false;
 
 const winPatterns = [
-	[0, 1, 2],
-    [0, 3, 6],
-    [0, 4, 8],
-    [1, 4, 7],
-    [2, 5, 8],
-    [2, 4, 6],
-    [3, 4, 5],
-    [6, 7, 8],
+  [1,2,3],
+  [4,5,6],
+  [7,8,9],
+  [1,4,7],
+  [2,5,8],
+  [3,6,9],
+  [1,5,9],
+  [3,5,7]
 ];
 
-boxes.forEach(box) => {
-	box.addEventListener("click", () => {
-		if(turnO) {
-			box.innerText = "O";
-			turnO = false;
-		} else {
-			box.innerText = "X";
-			turnO = true;
-		}
-	})
-}
-const showWinner = (winner) => {
-	msg.innerText =`${currentPlayer}, congratulation you won!`
-}
+submitBtn.addEventListener("click", () => {
+  player1 = document.getElementById("player-1").value.trim();
+  player2 = document.getElementById("player-2").value.trim();
 
-const checkWinner = () => {
-	for(let pattern of winPatterns) {
-		let pos1Val = [pattern[0]].innerText;
-		let pos2Val = [pattern[1]].innerText;
-		let pos3Val = [pattern[2]].innerText;
+  if (!player1 || !player2) {
+	alert("Enter both player names");
+	return;
+  }
 
-		if(pos1Val != "" && pos2Val != "" && pos3Val != "") {
-			if(pos1Val === pos2Val && pos2Val === pos3Val) {
-				showWinner(pos1Val);
-				return true;
-			}
-		}
+  document.getElementById("player-form").classList.add("hidden");
+  gameDiv.classList.remove("hidden");
+
+  currentPlayer = player1;
+  messageDiv.textContent = `${currentPlayer}, you're up`;
+});
+
+cells.forEach(cell => {
+  cell.addEventListener("click", () => {
+	if (cell.textContent !== "" || gameOver) return;
+
+	cell.textContent = currentSymbol;
+
+	if (checkWin()) {
+	  messageDiv.textContent = `${currentPlayer} congratulations you won!`;
+	  gameOver = true;
+	  return;
 	}
-};
+
+	// Switch player
+	if (currentSymbol === "X") {
+	  currentSymbol = "O";
+	  currentPlayer = player2;
+	} else {
+	  currentSymbol = "X";
+	  currentPlayer = player1;
+	}
+
+	messageDiv.textContent = `${currentPlayer}, you're up`;
+  });
+});
+
+function checkWin() {
+  return winPatterns.some(pattern => {
+	return pattern.every(id => {
+	  return document.getElementById(id).textContent === currentSymbol;
+	});
+  });
+}
