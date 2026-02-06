@@ -6,7 +6,7 @@
     let player1 = "";
     let player2 = "";
     let currentPlayer = "";
-    let currentSymbol = "X";
+    let currentSymbol = "x";
     let gameOver = false;
 
     const winPatterns = [
@@ -49,11 +49,11 @@
         }
 
         // Switch player
-        if (currentSymbol === "X") {
-          currentSymbol = "O";
+        if (currentSymbol === "x") {
+          currentSymbol = "o";
           currentPlayer = player2;
         } else {
-          currentSymbol = "X";
+          currentSymbol = "x";
           currentPlayer = player1;
         }
 
