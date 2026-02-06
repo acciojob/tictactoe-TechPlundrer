@@ -1,75 +1,70 @@
-document.addEventListener("DOMContentLoaded", function () {
+const submitBtn = document.getElementById("submit");
+const player1Input = document.getElementById("player1");
+const player2Input = document.getElementById("player2");
+const inputSection = document.getElementById("input-section");
+const boardSection = document.getElementById("board-section");
+const message = document.getElementById("message");
 
-  const submitBtn = document.getElementById("submit");
-  const messageDiv = document.querySelector(".message");
-  const cells = document.querySelectorAll(".cell");
+const cells = document.querySelectorAll(".cell");
 
-  let player1 = "";
-  let player2 = "";
-  let currentPlayer = "";
-  let currentSymbol = "X";
-  let gameOver = false;
+let player1 = "";
+let player2 = "";
 
-  const winPatterns = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9],
-    [1,4,7],
-    [2,5,8],
-    [3,6,9],
-    [1,5,9],
-    [3,5,7]
-  ];
+let currentPlayer = "";
+let CurrentSymbol = "x";
 
-  submitBtn.addEventListener("click", function () {
-    const p1 = document.getElementById("player1");
-    const p2 = document.getElementById("player2");
+let gameOver = false;
 
-    if (!p1 || !p2) return;
+submitBtn.addEventListener("click", ()=> {
+	player1 = player1Input.value.trim();
+	player2 = player2Input.value.trim();
 
-    player1 = p1.value.trim();
-    player2 = p2.value.trim();
-
-    if (!player1 || !player2) return;
-
-    document.getElementById("player-form").style.display = "none";
-    document.getElementById("game").style.display = "block";
-
-    currentPlayer = player1;
-    currentSymbol = "X";
-    messageDiv.textContent = `${currentPlayer}, you're up`;
-  });
-
-  cells.forEach(function (cell) {
-    cell.addEventListener("click", function () {
-      if (cell.textContent !== "" || gameOver) return;
-
-      cell.textContent = currentSymbol;
-
-      if (checkWin()) {
-        messageDiv.textContent = `${currentPlayer} congratulations you won!`;
-        gameOver = true;
-        return;
-      }
-
-      if (currentSymbol === "X") {
-        currentSymbol = "O";
-        currentPlayer = player2;
-      } else {
-        currentSymbol = "X";
-        currentPlayer = player1;
-      }
-
-      messageDiv.textContent = `${currentPlayer}, you're up`;
-    });
-  });
-
-  function checkWin() {
-    return winPatterns.some(function (pattern) {
-      return pattern.every(function (id) {
-        return document.getElementById(id).textContent === currentSymbol;
-      });
-    });
-  }
-
+	if (!player1 || !player2) {
+		alert("Please enter names for both players!");
+		return;
+	}
+	inputSection.style.display = "none";
+	boardSection.style.display = "flex";
+	currentPlayer = player1;
+	message.textContent = `${currentPlayer}, you're up`;
 });
+
+//on cell  click
+
+cells.forEach(cell => {
+	cell.addEventListener("click", () => {
+		if(gameOver || cell.textContent !== "") return;
+		cell.textContent = CurrentSymbol; //lowercase x or o;
+
+		if(checkWinner()) {
+			message.textContent = `${currentPlayer} congratulations you won!`;
+			gameOver = true;
+			return;
+		}
+
+		//switch turn
+
+		CurrentSymbol = CurrentSymbol === "x"?"o" : "x";
+		currentPlayer = currentPlayer === player1?player2 : player1;
+		message.textContent = `${currentPlayer} you're up`;
+	});
+});
+
+//check winning combi
+
+function checkWinner() {
+	const WinCombos = [
+		[1, 2, 3],
+		[4, 5, 6],
+		[7, 8, 9],
+		[1, 4, 7],
+		[2, 5, 8],
+		[3, 6, 9],
+		[1, 5, 9],
+		[3, 5, 7],
+	];
+	return WinCombos.some(combo => {
+		const [a, b,c] = combo.map(id => document.getElementById(id).textContent);
+		return a && a === b && b === c;
+	});
+}
